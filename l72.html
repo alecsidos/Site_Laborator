@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Despre Mine - Csidos Maria-Alexandra</title>
+
+    <style>
+        body {
+            background-color: #f8fbff;
+            color: #222;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header, section, footer {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #3b5998;
+            font-size: 2.5em;
+            text-align: center;
+            font-family: "Georgia", serif;
+        }
+
+        h2 {
+            color: #0066cc;
+            border-bottom: 2px solid #0066cc;
+            padding-bottom: 5px;
+            font-family: "Verdana", sans-serif;
+        }
+
+        .profil {
+            display: block;
+            margin: 20px auto;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid #0066cc;
+            opacity: 0.9;
+            transition: all 0.5s ease;
+            object-fit: cover;
+        }
+
+        #buton-viata {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #buton-viata:hover {
+            background-color: #004080;
+        }
+
+        #nastere {
+            font-weight: bold;
+            color: #0066cc;
+            cursor: pointer;
+        }
+
+        #emailInput {
+            width: 60%;
+            padding: 8px;
+            margin-top: 10px;
+            border: 1px solid #0066cc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        #emailMsg {
+            font-size: 0.9em;
+            color: green;
+            margin-top: 5px;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.9em;
+            color: #555;
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Despre Mine</h1>
+        <img id="pozaProfil" 
+             src="https://i.pinimg.com/474x/cd/1e/ea/cd1eeaead1188757cc5a180df3586ccc.jpg" 
+             alt="Fotografie de profil" 
+             class="profil">
+    </header>
+
+    <section id="identificare">
+        <h2>Date de identificare</h2>
+        <p><strong>Nume:</strong> Csidos Maria-Alexandra</p>
+        <p><strong>Facultate:</strong> Universitatea Tehnică din Cluj-Napoca (UTCN)</p>
+        <p><strong>Specializare:</strong> Electronică, Telecomunicații și Tehnologia Informației (ETTI)</p>
+        <p><strong>Anul nașterii:</strong> <time id="nastere" datetime="2006">2006</time></p>
+    </section>
+
+    <section id="email-section">
+        <h2>Adresa de e-mail (opțional)</h2>
+        <input type="text" id="emailInput" value="alexandra.maria.csidos@gmail.com">
+        <p id="emailMsg"></p>
+    </section>
+
+    <button id="buton-viata">Altă viață</button>
+
+    <footer>
+        &copy; 2025 Csidos Maria-Alexandra. Toate drepturile rezervate.
+    </footer>
+
+    <script>
+   
+        const buton = document.getElementById("buton-viata");
+        const poza = document.getElementById("pozaProfil");
+
+        const pozaInitiala = poza.src;
+        const pozaNoua = "https://i.pinimg.com/236x/b4/f8/f8/b4f8f8851eecbe456c4eed4a3fd8822f.jpg";
+
+        let schimbata = false;
+
+        buton.addEventListener("click", function() {
+            if (!schimbata) {
+                poza.src = pozaNoua;
+                poza.style.border = "5px solid gold";
+                poza.style.opacity = "0.8";
+                buton.textContent = "Înapoi la viața originală";
+                schimbata = true;
+            } else {
+                poza.src = pozaInitiala;
+                poza.style.border = "4px solid #0066cc";
+                poza.style.opacity = "0.9";
+                buton.textContent = "Altă viață";
+                schimbata = false;
+            }
+        });
+
+       
+        const nastere = document.getElementById("nastere");
+        const anulNasterii = parseInt(nastere.textContent);
+
+        nastere.onmouseover = function() {
+            const anulCurent = new Date().getFullYear();
+            const varsta = anulCurent - anulNasterii;
+            nastere.textContent = "Vârsta: " + varsta + " ani";
+        };
+
+        nastere.onmouseout = function() {
+            nastere.textContent = anulNasterii;
+        };
+
+     
+        const emailInput = document.getElementById("emailInput");
+        const emailMsg = document.getElementById("emailMsg");
+
+        function valideazaEmail() {
+            const email = emailInput.value;
+            if (email.length > 0 && !email.includes("@")) {
+                emailMsg.textContent = "Adresa de e-mail trebuie să conțină caracterul '@'";
+                emailMsg.style.color = "red";
+            } else if (email.includes("@")) {
+                emailMsg.textContent = "Adresă validă ✅";
+                emailMsg.style.color = "green";
+            } else {
+                emailMsg.textContent = "";
+            }
+        }
+
+        // verificare la încărcare
+        window.onload = valideazaEmail;
+
+        // verificare la modificarea câmpului
+        emailInput.addEventListener("input", valideazaEmail);
+    </script>
+</body>
+</html>
